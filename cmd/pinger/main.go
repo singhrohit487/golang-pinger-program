@@ -13,11 +13,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-const DefaultInterface = "0.0.0.0"
 const DefaultPingTimeout = 10 * time.Second
-const DefaultPort = 8000
-const DefaultTargetHost = "localhost"
-const DefaultTargetProto = "http"
 const DefaultTimeout = 5 * time.Second
 const ExitCodeSuccess = 0
 const ExitCodeInitFailed = 1
@@ -38,23 +34,33 @@ func init() {
 			os.Exit(ExitCodeInitFailed)
 		}
 	}()
+
+	// initialise the configuration
 	c := viper.New()
 	c.SetDefault("interface", DefaultInterface)
 	c.SetDefault("ping_timeout", DefaultPingTimeout)
 	c.SetDefault("port", DefaultPort)
 	c.SetDefault("target_proto", DefaultTargetProto)
 	c.SetDefault("target_host", DefaultTargetHost)
-	c.SetDefault("target_port", DefaultPort)
+	c.SetDefault("target_port", DefaultTargetPort)
+	c.SetDefault("target_path", DefaultTargetPath)
+
+	// draws in the configuration from the environment
 	c.AutomaticEnv()
 
 	config = Config{
-		Interface:   c.GetString("interface"),
-		PingTimeout: c.GetDuration("ping_timeout"),
-		Port:        uint16(c.GetUint("port")),
+		// from the INTERFACE environment variable
+		Interface: c.GetString("interface"),
+		// from the PORT environment variable
+		Port: uint16(c.GetUint("port")),
+		// from the TARGET_PROTO environment variable
 		TargetProto: c.GetString("target_proto"),
-		TargetHost:  c.GetString("target_host"),
-		TargetPort:  uint16(c.GetUint("target_port")),
-		TargetPath:  c.GetString("target_path"),
+		// from the TARGET_HOST environment variable
+		TargetHost: c.GetString("target_host"),
+		// from the TARGET_PORT environment variable
+		TargetPort: uint16(c.GetUint("target_port")),
+		// from the TARGET_PATH environment variable
+		TargetPath: c.GetString("target_path"),
 	}
 }
 
@@ -81,7 +87,7 @@ func main() {
 	go server.ListenAndServe()
 	for {
 		select {
-		// pinger
+		// pinger schedule
 		case <-tick:
 			client := http.Client{
 				Timeout: DefaultPingTimeout,
@@ -104,16 +110,23 @@ func main() {
 	}
 }
 
+// createMux returns the multiplexer we use to route our requests
 func createMux() *http.ServeMux {
 	mux := http.NewServeMux()
+
+	// root endpoint - say hi!
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("hello world"))
 	})
+
+	// liveness check
 	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("alive"))
 	})
+
+	// readiness check
 	mux.HandleFunc("/readyz", func(w http.ResponseWriter, r *http.Request) {
 		if readiness["target_up"] {
 			w.WriteHeader(http.StatusOK)
@@ -126,6 +139,7 @@ func createMux() *http.ServeMux {
 	return mux
 }
 
+// createServer returns a http.Server
 func createServer(addr string, handler http.Handler) http.Server {
 	return http.Server{
 		Addr:              addr,
@@ -137,34 +151,17 @@ func createServer(addr string, handler http.Handler) http.Server {
 	}
 }
 
+// handleError is the generic error handler
 func handleError(err error, log *log.Logger) {
 	if err != nil {
 		log.Println(err)
 	}
 }
 
-// requestLoggerMiddleware is a middleware that
+// requestLoggerMiddleware is a middleware that logs incoming requests
 func requestLoggerMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		next.ServeHTTP(w, r)
 		serverLogger.Printf("< %s <- %s | %s %s %s \n", r.Host, r.RemoteAddr, strings.ToUpper(r.Proto), r.Method, r.URL.Path)
 	})
-}
-
-// Config provides an interface for the configuration we will be using
-// in this service
-type Config struct {
-	Interface   string        `json:"interface"`
-	PingTimeout time.Duration `json:"port"`
-	Port        uint16        `json:"port"`
-	TargetHost  string        `json:"target_host"`
-	TargetPath  string        `json:"target_path"`
-	TargetPort  uint16        `json:"target_port"`
-	TargetProto string        `json:"target_proto"`
-}
-
-// getTargetURL retrieves the exact URL which we can use to ping the
-// target server
-func (c *Config) getTargetURL() string {
-	return fmt.Sprintf("%s://%s:%v/%s", c.TargetProto, c.TargetHost, c.TargetPort, c.TargetPath)
 }

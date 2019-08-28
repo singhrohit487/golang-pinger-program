@@ -74,7 +74,7 @@ Not everyone has Go installed locally! Let's make it easier for developers to ru
 
 ## Task
 
-Create a `Dockerfile` in the `./build` directory according to any best practices you may know about.
+Create a `Dockerfile` in the `./build` directory according to any best practices you may know about. You may write tests as you see fit.
 
 ## Deliverable
 
@@ -175,7 +175,7 @@ When referring to problems, we often use a version number. The (arguably) leadin
 
 ## Task
 
-Your pipeline probably has multiple stages (regardless of in YAML structure/in logic), add additional scripting to bump the version of this repository using Git tags. The versioning strategy is up to you to decide.
+Your pipeline probably has multiple stages (regardless of in YAML structure/in logic), add additional scripting to bump the version of this repository using Git tags, and add this version to the produced Docker image too. The versioning strategy is up to you to decide.
 
 ## Deliverable
 
