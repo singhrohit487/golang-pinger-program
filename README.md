@@ -74,11 +74,11 @@ Not everyone has Go installed locally! Let's make it easier for developers to ru
 
 ## Task
 
-Create a `Dockerfile` in the `./build` directory according to any best practices you may know about. You may write tests as you see fit.
+Create a `Dockerfile` in the `./deployments/build` directory according to any best practices you may know about. You may write tests as you see fit.
 
 ## Deliverable
 
-Running `docker build -f ./build/Dockerfile -t devops/pinger:latest .` should result in a successful image named `devops/pinger:latest` which is reflected in the output of `docker image ls`.
+Running `docker build -f ./deployments/build/Dockerfile -t devops/pinger:latest .` should result in a successful image named `devops/pinger:latest` which is reflected in the output of `docker image ls`.
 
 Running `docker run -it -p 8000:8000 devops/pinger:latest` should result in the same behaviour as running `go run ./cmd/pinger`.
 
