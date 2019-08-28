@@ -200,3 +200,15 @@ If you're selected, you will be notified and requested to join us for a face-to-
 Code is licensed under the [MIT license](./LICENSE).
 
 Content is licensed under the [Creative Commons 4.0 (Attribution) license](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+
+- - -
+
+
+# For Engagers
+
+| Link | Description |
+| --- | --- |
+| GitHub | [[https://github.com/GovTechSG/mcf-devops-checkin](https://github.com/GovTechSG/mcf-devops-checkin) |
+| GitLab | [[https://gitlab.com/mycf.sg/devops-checkin](https://gitlab.com/mycf.sg/devops-checkin) |
+| Assessment | [https://gitlab.com/mycf.sg/devops-checkin-assessment](https://gitlab.com/mycf.sg/devops-checkin-assessment) |
