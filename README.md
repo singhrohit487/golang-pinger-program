@@ -56,9 +56,9 @@ You will also need the following accounts:
 
 ## Get Started
 
-1. Clone this repository from GitHub
-2. Create a repository on GitLab
-3. Set your local repository's remote to point to your GitLab
+1. Clone this repository
+2. Create your own repository on GitLab
+3. Set your local repository's remote to point to your GitLab repository
 4. Make your changes locally according to the tasks below
 5. Push to your GitLab repository
 
