@@ -6,7 +6,9 @@ This is a technical check-in for DevOps engineers.
 
 # Orientation & Instruction
 
-This repository contains a simple program written in Go named `pinger` with a basic `Makefile` that allows you to:
+This repository contains a simple program written in Golang named `pinger`. This service reponds with `"hello world"` at the root path and can be configured to ping another server through the environment variables (see the file at `./cmd/pinger/config.go`). By default, running it will make it start a server and ping itself.
+
+A basic `Makefile` is provided that allows you to:
 
 - pull in dependencies - `make dep`
 - builds the binaries - `make build`
