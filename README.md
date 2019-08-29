@@ -206,11 +206,3 @@ Content is licensed under the [Creative Commons 4.0 (Attribution) license](https
 
 - - -
 
-
-# For Engagers
-
-| Link | Description |
-| --- | --- |
-| GitHub | [[https://github.com/GovTechSG/mcf-devops-checkin](https://github.com/GovTechSG/mcf-devops-checkin) |
-| GitLab | [[https://gitlab.com/mycf.sg/devops-checkin](https://gitlab.com/mycf.sg/devops-checkin) |
-| Assessment | [https://gitlab.com/mycf.sg/devops-checkin-assessment](https://gitlab.com/mycf.sg/devops-checkin-assessment) |
