@@ -49,9 +49,23 @@ You will need the following installed:
 
  docker run -it -p 8000:8000 devops/pinger:latest
 
+--------------------------------------
 ### Expected output:
+service|2021/04/13 10:08:30 initialising service...
+service|2021/04/13 10:08:30 attempting to listen on '0.0.0.0:8000'...
+ server|2021/04/13 10:08:31 < localhost:8000 <- [::1]:42104 | HTTP/1.1 GET / 
+service|2021/04/13 10:08:31 > http://localhost:8000/ -> '200 OK'
+ server|2021/04/13 10:08:32 < localhost:8000 <- [::1]:42106 | HTTP/1.1 GET / 
+service|2021/04/13 10:08:32 > http://localhost:8000/ -> '200 OK'
+ server|2021/04/13 10:08:33 < localhost:8000 <- [::1]:42108 | HTTP/1.1 GET / 
+service|2021/04/13 10:08:33 > http://localhost:8000/ -> '200 OK'
+ server|2021/04/13 10:08:34 < localhost:8000 <- [::1]:42110 | HTTP/1.1 GET / 
+service|2021/04/13 10:08:34 > http://localhost:8000/ -> '200 OK'
+ server|2021/04/13 10:08:35 < localhost:8000 <- [::1]:42112 | HTTP/1.1 GET / 
+service|2021/04/13 10:08:35 > http://localhost:8000/ -> '200 OK'
+ server|2021/04/13 10:08:36 < localhost:8000 <- [::1]:42114 | HTTP/1.1 GET / 
+service|2021/04/13 10:08:36 > http://localhost:8000/ -> '200 OK'
 
-![image-1.png](./image-1.png)
 
 ## Exports the docker image as a tarball
 
@@ -61,13 +75,27 @@ You will need the following installed:
 
  docker-compose -f ./deployments/docker-compose.yml up  
 
+-------------------------------------------
 ### Expected output:
+Creating deployments_pinger1_1 ... done
+Creating deployments_pinger2_1 ... done
+Attaching to deployments_pinger2_1, deployments_pinger1_1
+pinger2_1  | service|2021/04/13 14:39:26 initialising service...
+pinger2_1  | service|2021/04/13 14:39:26 attempting to listen on '0.0.0.0:8000'...
+pinger1_1  | service|2021/04/13 14:39:26 initialising service...
+pinger1_1  | service|2021/04/13 14:39:26 attempting to listen on '0.0.0.0:8000'...
+pinger2_1  |  server|2021/04/13 14:39:27 < localhost:8000 <- [::1]:42312 | HTTP/1.1 GET / 
+pinger2_1  | service|2021/04/13 14:39:27 > http://localhost:8000/ -> '200 OK'
+pinger1_1  |  server|2021/04/13 14:39:27 < localhost:8000 <- [::1]:42314 | HTTP/1.1 GET / 
+pinger1_1  | service|2021/04/13 14:39:27 > http://localhost:8000/ -> '200 OK'
+pinger2_1  |  server|2021/04/13 14:39:28 < localhost:8000 <- [::1]:42316 | HTTP/1.1 GET / 
+pinger2_1  | service|2021/04/13 14:39:28 > http://localhost:8000/ -> '200 OK'
+pinger1_1  |  server|2021/04/13 14:39:28 < localhost:8000 <- [::1]:42318 | HTTP/1.1 GET / 
+pinger1_1  | service|2021/04/13 14:39:28 > http://localhost:8000/ -> '200 OK'
 
-![image.png](./image.png)
 
 ## Pipeline to automate building the binary and docker image, exporting as tarball as an artifacts
 
  cat ./.gitlab-ci.yml
 
 # That's it !
-
