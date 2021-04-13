@@ -1,0 +1,39 @@
+stages:
+  - dep
+  - test
+  - build
+
+dep:
+  stage: dep
+  image: golang:1.15.6-alpine3.12
+  script:
+    - go mod vendor
+    - go build -mod vendor -o ./bin/pinger ./cmd/pinger
+  artifacts:
+    paths:
+      - vendor/
+
+test:
+  stage: test
+  dependencies:
+    - dep
+  image: golang:1.15.6-alpine3.12
+  script:
+    - go test ./...
+    
+build:
+  stage: build
+  dependencies:
+    - dep
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -f ./deployments/build/Dockerfile -t devops/pinger:latest .
+    - mkdir build
+    - docker save -o ./build/pinger.tar devops/pinger:latest
+  artifacts:
+    paths:
+    - build
+  only:
+    - master
