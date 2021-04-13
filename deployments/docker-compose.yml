@@ -1,0 +1,14 @@
+version: '3' 
+services: 
+  pinger1: 
+    image: devops/pinger:latest
+    command: go run ./cmd/pinger
+    
+  pinger2: 
+    image: devops/pinger:latest
+    command: go run ./cmd/pinger
+
+networks: 
+  default: 
+    external: 
+      name: pinger-network
