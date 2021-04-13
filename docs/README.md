@@ -40,6 +40,7 @@ You will need the following installed:
 4. Make your changes locally
 5. Push to your GitLab repository
 
+
 ## Build Docker image
 
  docker build -f ./deployments/build/Dockerfile -t devops/pinger:latest .
@@ -48,33 +49,25 @@ You will need the following installed:
 
  docker run -it -p 8000:8000 devops/pinger:latest
 
-# Expected output:
+### Expected output:
 
-
+![image-1.png](./image-1.png)
 
 ## Exports the docker image as a tarball
 
  docker save -o ./build/pinger.tar devops/pinger:latest 
 
-## Imports the docker image from a tarball
-
- docker load -i ./build/pinger.tar
-
 ## Creation of docker-compose.yml in the ./deployments to demonstrate two pinger services that ping each other
 
- docker-compose up  
+ docker-compose -f ./deployments/docker-compose.yml up  
 
-# Expected output:
+### Expected output:
 
+![image.png](./image.png)
 
-
-
-## Pipeline to automate building the docker image, exporting as tarball and loading the image from tarball as an artifacts
+## Pipeline to automate building the binary and docker image, exporting as tarball as an artifacts
 
  cat ./.gitlab-ci.yml
 
-
-
-## Done !
-
+# That's it !
 
