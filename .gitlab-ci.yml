@@ -19,7 +19,7 @@ test:
     - dep
   image: golang:1.15.6-alpine3.12
   script:
-    - apk add bash ca-certificates git gcc g++ libc-dev
+    - apk add bash ca-certificates gcc g++ libc-dev
     - go test ./...
     
 build:
